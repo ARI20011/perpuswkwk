@@ -46,22 +46,13 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                            Total ulasan </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
+                                            
                                                     <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"></div><?php echo mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM ulasan")); ?>
                                                 
                                                 
 
                                                 </div>
-                                                <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                
                                         <div class="col-auto">
                                             <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
                                         </div>
@@ -87,4 +78,28 @@
                                 </div>
                             </div>
                         </div>
-           
+
+                    </div>
+          
+                    
+  <div class="card mb-4">
+    <div class="card-body">
+        <table class="table table-bordered">
+              <tr>
+                  <td width="150"><strong>Nama</strong></td>
+                  <td width="1">:</td>
+                  <td width="200"><?= $_SESSION['user']['nama'];?></td>
+                  
+             </tr>
+             <tr>
+                    <td width="150"><strong>Level User</strong></td>
+                  <td width="1">:</td>
+                  <td width="200"><?= $_SESSION['user']['level'];?></td>
+            </tr>
+             <tr>
+                    <td width="150"><strong>Tanggal Login</strong></td>
+                    <td width="1">:</td>
+                    <td ><?= date('d-m-y');?></td>
+             </tr>
+        </table>
+    </div>

@@ -1,14 +1,14 @@
 <?php
-include "koneksi.php";
-if(!isset($_SESSION['user'])) {
-    header("location: logout.php");
-    
+include 'koneksi.php';
+if (!isset($_SESSION["user"])) {
+    header("location:login.php");
 }
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
     <meta charset="utf-8">
@@ -17,8 +17,8 @@ if(!isset($_SESSION['user'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Perpuswkwk - Dashboard</title>
-
+    <title>PERPUS DIGITALL - Dashboard</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-vhN4eKZZcIq6JHxL/T0xVZC6u6Nf9D9wVfVh5+2gAa8MC2+GzY/2yD+QdR5zjkJX/7jrf1oPZ8aClbH+qz4BZw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -27,6 +27,7 @@ if(!isset($_SESSION['user'])) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/custom-colors.css" rel="stylesheet">
 
 </head>
 
@@ -38,19 +39,22 @@ if(!isset($_SESSION['user'])) {
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <!-- Sidebar - Brand (E-Perpus) -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-book"></i>
+                    <i class="fas fa-book-open"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Perpuswkwk </div>
+                <div class="sidebar-brand-text mx-3">Perpuswkwk</div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
+            <!-- Heading CORE -->
+            <div class="sidebar-heading">CORE</div>
+
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item <?php echo (!isset($_GET['page']) || $_GET['page']=='home') ? 'active' : ''; ?>">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
@@ -59,53 +63,52 @@ if(!isset($_SESSION['user'])) {
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
+            <!-- Heading NAVIGASI -->
+            <div class="sidebar-heading">NAVIGASI</div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="?page=peminjaman" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-book"></i>
+            <li class="nav-item <?php echo (isset($_GET['page']) && $_GET['page']=='peminjaman') ? 'active' : ''; ?>">
+                <a class="nav-link" href="?page=peminjaman">
+                    <i class="fas fa-fw fa-user-tag"></i>
                     <span>Peminjaman</span>
                 </a>
-                
             </li>
-            <?php if($_SESSION['user']['level']=='peminjam') : ?>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="?page=kategori" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fa-solid fa-bars"></i>
-                    <span>kategory</span>
+            <li class="nav-item <?php echo (isset($_GET['page']) && ($_GET['page']=='kategori' || $_GET['page']=='kategori_tambah')) ? 'active' : ''; ?>">
+                <a class="nav-link" href="?page=kategori">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Kategori</span>
                 </a>
-                
             </li>
-            <?php endif; ?>
-
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="?page=buku" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fa-solid fa-book-open"></i>
+            <li class="nav-item <?php echo (isset($_GET['page']) && $_GET['page']=='buku') ? 'active' : ''; ?>">
+                <a class="nav-link" href="?page=buku">
+                    <i class="fas fa-fw fa-book"></i>
                     <span>Buku</span>
                 </a>
-                
             </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="?page=ulasan" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fa-solid fa-bars"></i>
+            <li class="nav-item <?php echo (isset($_GET['page']) && $_GET['page']=='ulasan') ? 'active' : ''; ?>">
+                <a class="nav-link" href="?page=ulasan">
+                    <i class="fas fa-fw fa-comment"></i>
                     <span>Ulasan</span>
                 </a>
-                
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-fw fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
+            <!-- Logged in as -->
+            <div class="text-center d-none d-md-inline px-3 py-2">
+                <small class="text-white-50">Logged in as: <strong><?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?></strong></small>
+            </div>
+
+            <!-- Sidebar Toggler -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
 
         </ul>
         <!-- End of Sidebar -->
@@ -117,10 +120,10 @@ if(!isset($_SESSION['user'])) {
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-dark topbar topbar-dark mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
-                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3 text-white">
                         <i class="fa fa-bars"></i>
                     </button>
 
@@ -128,7 +131,7 @@ if(!isset($_SESSION['user'])) {
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                            <input type="text" class="form-control topbar-search-input border-0 small" placeholder="Search for..."
                                 aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="button">
@@ -152,7 +155,7 @@ if(!isset($_SESSION['user'])) {
                                 aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
-                                        <input type="text" class="form-control bg-light border-0 small"
+                                        <input type="text" class="form-control topbar-search-input border-0 small"
                                             placeholder="Search for..." aria-label="Search"
                                             aria-describedby="basic-addon2">
                                         <div class="input-group-append">
@@ -288,7 +291,7 @@ if(!isset($_SESSION['user'])) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-white small"><?php echo $_SESSION["user"]["username"]; ?></span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
@@ -317,35 +320,61 @@ if(!isset($_SESSION['user'])) {
 
                     </ul>
 
+
+                    </ul>
+
                 </nav>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
+                    <!-- Page Heading (hanya tampil di dashboard home) -->
+                    <?php 
+                    $page = isset($_GET['page']) ? $_GET['page'] : 'home';
+                    if ($page === 'home') : ?>
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    </div>
+                    <?php endif; ?>
+
+                    <!-- Content Row -->
+
+                    <!-- Content Row -->
+
+                    <div class="row">
+                    <?php 
+                    if (file_exists($page . '.php')) {
+                        include $page . '.php';
+                    } else {
+                        include '404.php';
+                    }
+                    ?>
+
+                        <!-- Area Chart -->
+
+                        <!-- Pie Chart -->
+                        
                     </div>
 
                     <!-- Content Row -->
                     <div class="row">
-                        <?php
-                        $page = isset($_GET['page']) ? $_GET['page'] : 'home';
-                        if (file_exists($page . '.php')) {
-                            include $page . '.php';
-                        } else {
-                            include "404.php";
-                        }
 
-                        ?>
+                        <!-- Content Column -->
+                        
+
+                        <div class="col-lg-6 mb-4">
+
+                            <!-- Illustrations -->
+                           
+
+                            <!-- Approach -->
+                            
+
+                        </div>
                     </div>
 
-                    
-
-                 
                 </div>
                 <!-- /.container-fluid -->
 
@@ -356,7 +385,7 @@ if(!isset($_SESSION['user'])) {
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2021</span>
+                        <span>Copyright &copy; Your Website 2026</span>
                     </div>
                 </div>
             </footer>
@@ -387,7 +416,7 @@ if(!isset($_SESSION['user'])) {
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.php">Logout</a>
+                    <a class="btn btn-primary" href="logout.php">Logout</a>
                 </div>
             </div>
         </div>
