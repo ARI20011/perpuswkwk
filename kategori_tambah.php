@@ -1,36 +1,44 @@
-<div class="container-fluid">
+<div class="w-100">
     <h2 class="mb-4 text-gray-800">Kategori Buku</h2>
 
     <div class="card shadow mb-4">
         <div class="card-body">
-            <form action="" method="POST">
+            <form action="" method="post">
                 <?php
-                if (isset($_POST['submit'])) {
+                if(isset($_POST['submit'])) {
                     $kategori = strtolower($_POST['kategori']);
                     // Cek apakah kategori sudah ada
-                    $cek = mysqli_query($koneksi, "SELECT * FROM kategori WHERE LOWER(kategori)='$kategori'");
+                    $cek = mysqli_query($koneksi, "SELECT * FROM kategori WHERE Lower(kategori)='$kategori'");
                     $check = mysqli_num_rows($cek);
-                    if ($check > 0) {
-                        echo "Data Yang dimasukkan sudah ada";
-                    } else {
-                        $query = mysqli_query($koneksi, "INSERT INTO kategori (kategori) VALUES ('$kategori')");
-                        if ($query) {
-                            echo "<script>alert('Kategori berhasil ditambahkan'); </script>";
-                        } else {
-                            echo "<script>alert('Kategori gagal ditambahkan'); </script>";
-                        }
+                    if($check > 0) {
+                        echo '<script> alert("Kategori sudah ada"); </script>';
+                        return false;
+                    } else{
+                        $query = mysqli_query($koneksi, "INSERT INTO kategori VALUES (NULL, '$kategori')");
+                            if($query) {
+                                echo '<script> alert("Data berhasil disimpan");
+                                location.href="?page=kategori";</script>';  
+                            } else {
+                                echo '<script> alert("Data gagal disimpan"); </script>';   
+                            }
                     }
                 }
-                ?>
+                ?> 
+            <!-- form -->
                 <div class="form-group mb-3">
                     <label for="kategori" class="font-weight-bold text-gray-800">Nama Kategori</label>
-                    <input type="text" name="kategori" id="kategori" class="form-control" placeholder="Masukkan nama kategori" required>
+                    <div class="col-md-6">
+                        <input type="text" name="kategori" id="kategori" class="form-control" placeholder="Masukkan nama kategori" required>
+                    </div>
                 </div>
-                <div class="form-group mb-0">
+
+            <div class="row">
+                <div class="col-md-9 offset-md-3">
                     <button type="submit" class="btn btn-primary" name="submit" value="submit">Simpan</button>
                     <button type="reset" class="btn btn-secondary">Reset</button>
                     <a href="?page=kategori" class="btn btn-danger">Kembali</a>
                 </div>
+            </div>
             </form>
         </div>
     </div>

@@ -5,7 +5,8 @@
         <div class="mb-3">
             <a href="?page=kategori_tambah" class="btn btn-primary">Tambah Data</a>
         </div>   
-     <?php endif;?>
+     <?php endif;
+     ?>
 
 
     <!-- table kategori -->
@@ -31,8 +32,8 @@
                     <!-- Hanya bisa di buka oleh admin -->
                     <?php  if($_SESSION['user']['level'] !='peminjam') : ?>
                     <td>
-                        <a href='?page=kategori_edit&id=<?= $data['id_kategori'];?>' class="btn btn-sm btn-info">Ubah</a>
-                        <a href='?page=kategori_hapus&id=<?= $data['id_kategori']; ?>' class="btn btn-sm btn-danger">Hapus</a>
+                        <a href='?page=kategori_edit&id=<?= $data["id_kategory"];?>' class="btn btn-sm btn-info">Ubah</a>
+                        <a href='?page=kategori_hapus&&id=<?= $data["id_kategory"]; ?>' class="btn btn-sm btn-danger">Hapus</a>
                     </td>
                 </tr>
                 <?php
